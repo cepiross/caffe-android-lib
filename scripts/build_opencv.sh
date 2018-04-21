@@ -8,10 +8,12 @@ set -eu
 OPENCV_ROOT=${PROJECT_DIR}/opencv
 BUILD_DIR=$OPENCV_ROOT/platforms/build_android
 
-if [ "${ANDROID_ABI}" = "armeabi" ]; then
-    API_LEVEL=19
-else
-    API_LEVEL=21
+if [ -z "${API_LEVEL}" ]; then
+    if [ "${ANDROID_ABI}" = "armeabi" ]; then
+        API_LEVEL=19
+    else
+        API_LEVEL=21
+    fi
 fi
 
 rm -rf "${BUILD_DIR}"
@@ -21,6 +23,7 @@ pushd "${BUILD_DIR}"
 cmake -DCMAKE_BUILD_WITH_INSTALL_RPATH=ON \
       -DCMAKE_TOOLCHAIN_FILE="${PROJECT_DIR}/android-cmake/android.toolchain.cmake" \
       -DANDROID_NDK="${NDK_ROOT}" \
+      -D__ANDROID_API__=${API_LEVEL} \
       -DANDROID_NATIVE_API_LEVEL=${API_LEVEL} \
       -DANDROID_ABI="${ANDROID_ABI}" \
       -D WITH_CUDA=OFF \

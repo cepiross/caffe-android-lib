@@ -16,7 +16,8 @@ cmake -DCMAKE_TOOLCHAIN_FILE="${PROJECT_DIR}/android-cmake/android.toolchain.cma
       -DANDROID_NDK="${NDK_ROOT}" \
       -DCMAKE_BUILD_TYPE=Release \
       -DANDROID_ABI="${ANDROID_ABI}" \
-      -DANDROID_NATIVE_API_LEVEL=21 \
+      -D__ANDROID_API__="${API_LEVEL}" \
+      -DANDROID_NATIVE_API_LEVEL="${API_LEVEL}" \
       -DCMAKE_INSTALL_PREFIX="${INSTALL_DIR}/protobuf" \
       -Dprotobuf_BUILD_TESTS=OFF \
       ../cmake
